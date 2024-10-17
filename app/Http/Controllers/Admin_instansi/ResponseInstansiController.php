@@ -18,6 +18,7 @@ class ResponseInstansiController extends Controller
         $laporan = Message::where('id_message', $request->id_message)->first();
 
         $tanggapan = ResponseInstansi::where('id_message', $request->id_message)->first();
+        $id_instansi = $laporan->agency_id;
 
         if($tanggapan) {
             $laporan->update(['status' => $request->status]);
@@ -36,7 +37,7 @@ class ResponseInstansiController extends Controller
                 Mail::to($laporan->email)->send(new DoneEmail($laporan, $tanggapan));
             }
 
-            return redirect()->route('instansi.show', compact('laporan','tanggapan'));
+            return redirect()->route('instansi.index', compact('laporan','tanggapan','id_instansi'));
         } else {
             $laporan->update(['status' => $request->status]);
 
@@ -56,7 +57,7 @@ class ResponseInstansiController extends Controller
             }
 
 
-        return redirect()->route('instansi.show', compact('laporan','tanggapan'))->with('status', 'Berhasil Dikirim');
+        return redirect()->route('admin_instansi.show', compact('laporan','tanggapan','id_instansi'))->with('status', 'Berhasil Dikirim');
         }
 
 

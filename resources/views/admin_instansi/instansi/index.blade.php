@@ -28,7 +28,7 @@
                         <td>{{ $instansi->parent }}</td>
                         <td>{{ $instansi->type }}</td>
                         <td>{{ $instansi->name }}</td>
-                        <td><a href="{{ route('instansi.show', ['id' => $instansi->id]
+                        <td><a href="{{ route('admin_instansi.show', ['id' => $instansi->id]
                         ) }}">lihat</a></td>
                     </tr>
                     @endforeach

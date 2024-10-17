@@ -82,7 +82,7 @@ Route::prefix('admin_instansi')->group(function() {
     Route::get('/logout', [AdminAgencyController::class, 'logout'])->name('admin_instansi.logout');
     Route::get('/dashboard', [InstansiDashboardController::class, 'index'])->name('admin_instansi_dashboard.index');
     Route::get('/instansi', [AgencyController::class, 'index'])->name('instansi.index');
-    Route::get('/instansi/{id}/detail', [AgencyController::class, 'lihatInstansi'])->name('instansi.show');
+    Route::get('/instansi/{id}/detail', [AgencyController::class, 'lihatInstansi'])->name('admin_instansi.show');
     Route::get('/instansi/{id}/laporan', [AgencyController::class, 'laporan'])->name('instansi.laporan');
     Route::post('/tanggapan/instansi', [ResponseInstansiController::class, 'createOrUpdate'])->name('tanggapan.instansi');
     Route::resource( 'kelola', ManageController::class);
