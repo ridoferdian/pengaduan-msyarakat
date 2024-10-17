@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tab-active {
+    @apply text-sky-800 border-b-sky-800 pb-3 border-b-2;
+}
