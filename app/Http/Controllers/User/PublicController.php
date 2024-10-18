@@ -23,7 +23,7 @@ class PublicController extends Controller
     public function index()
     {
         $jumlahLaporan = Message::count();
-        $messages = Message::all()->take(2);
+        $messages = Message::all()->take(4);
         $categorys = Category::all();
         $agencys = Agency::all();
         $kementerian = Agency::where('type', 'Kementerian')->count();

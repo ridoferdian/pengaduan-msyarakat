@@ -14,8 +14,8 @@ class AgencySeeder extends Seeder
     public function run(): void
     {
         Agency::insert([
-            ['parent' => '-',
-             'name' => 'Kementerian Uang',
+            ['parent' => 'Kanwil Kementerian Hukum dan HAM Kalimantan Selatan',
+             'name' => 'Lapas Perempuan Kelas IIA Bandung',
              'type' => 'Kementerian',
              'prefix_sms' => '-',
              'slug' => 'Kementerian-Uang'

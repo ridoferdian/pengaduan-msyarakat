@@ -205,6 +205,7 @@
 
 
 {{-- laporan --}}
+@if (Auth::guard('people')->check())
 <section class="container  lg:px-28  my-20">
     <div class="">
         <div class="">
@@ -254,6 +255,10 @@
         </div>
     </div>
 </section>
+@else
+
+@endauth
+
 {{-- end laporan --}}
 
 <div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 " >
@@ -284,6 +289,10 @@
     </div>
 </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 671865cee49f5b0d7a5808de3cedc1b5aee0107f
 @endsection
 
 

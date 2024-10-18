@@ -47,13 +47,25 @@
                                     <i data-feather="upload" class="w-4 h-4 text-white "></i>
                                 </a>
 
-                                <form action="" method="post" >
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="bg-red-400 w-6 h-6 flex items-center justify-center rounded-sm mx-2"  onclick="return confirm('apakah anda yakin?')">
-                                        <i data-feather="trash" class="w-4 h-4 text-white "></i>
-                                    </button>
-                                </form>
+                                <button type="button" onclick="openModal()" class="font-bold">Hapus</button>
+                                <div id="confirmModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+                                    <div class="flex items-center justify-center min-h-screen">
+                                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                                            <p>Yakin untuk dihapus?</p>
+                                                <div class="flex justify-end mt-4">
+                                                    <button onclick="closeModal()" class="bg-gray-300 px-4 py-2 rounded mr-2">Tidak</button>
+                                                    <button onclick="document.getElementById('deleteForm').submit()" class="bg-red-500 text-white px-4 py-2 rounded">Oke</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                        <form id="deleteForm" action="{{ route('kelola.destroy', $admin->id) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                        </form>
+
                             </span>
                         </td>
                     </tr>
@@ -67,3 +79,5 @@
 
 
 @endsection
+
+

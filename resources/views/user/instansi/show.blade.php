@@ -7,6 +7,7 @@
 </section>
 
 @section('content')
+<<<<<<< HEAD
 <section class="relative bg-gradient-to-b from-blue-500 to-blue-200 py-14 w-full">
 
       <defs>
@@ -79,4 +80,16 @@
         </div>
     </div>
 </section>
+=======
+
+    <section class="py-14 bg-primary" >
+    </section>
+
+    <section class="bg-[#0369a1] py-32 relative">
+        <div class="" >
+            
+        </div>
+    </section>
+
+>>>>>>> 671865cee49f5b0d7a5808de3cedc1b5aee0107f
 @endsection
