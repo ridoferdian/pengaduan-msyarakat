@@ -261,12 +261,12 @@
 
 {{-- end laporan --}}
 
-<div id="loginModal" class="hiddn fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 " >
-    <div class="bg-white p-8 rounded-md shadow-2xl relative">
+<div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 w-full box-border">
+    <div class="bg-white p-8 rounded-md shadow-2xl relative max-w-md w-full">
         @if (Session::has('pesan'))
-                <div class=" mt-2">
-                    {{ Session::get('pesan') }}
-                </div>
+            <div class="mt-2">
+                {{ Session::get('pesan') }}
+            </div>
         @endif
         <h2 class="text-xl font-bold mb-4 font-nunito">Login</h2>
         <form action="{{ route('login') }}" method="post" class="font-poppins">
@@ -281,13 +281,14 @@
             </div>
             <button type="submit" class="bg-blue-500 flex text-white py-2 px-4 rounded-md">Login</button>
         </form>
-        <button id="closeModal" class="mt-4  bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
+        <button id="closeModal" class="mt-4 bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
 
         <div class="relative">
-            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10 ">Lupa password?</a>
+            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10">Lupa password?</a>
         </div>
     </div>
 </div>
+
 
 @endsection
 
