@@ -30,7 +30,7 @@ class AuthController extends Controller
         $password = Hash::check($request->password, $username->password);
 
         if (!$password) {
-            return redirect()->back()->with(['pesan' => 'Password tidak sesuai']);
+            return redirect()->back()->with(['error' => 'Password tidak sesuai']);
         }
 
 

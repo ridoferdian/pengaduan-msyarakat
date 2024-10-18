@@ -65,4 +65,3 @@ new DataTable('#table');
 feather.replace();
 
 
-
