@@ -3,10 +3,14 @@
 @section('title', 'Detail Instansi')
 
 @section('content')
-<div class="container mx-auto">
-    <h1 class="text-2xl font-bold">{{ $instansi->name }}</h1>
-    <p>Induk Instansi: {{ $instansi->parent }}</p>
-    <p>Tipe Instansi: {{ $instansi->type }}</p>
-    <p>Prefix SMS: {{ $instansi->prefix_sms }}</p>
-</div>
+
+    <section class="py-14 bg-primary" >
+    </section>
+
+    <section class="bg-[#0369a1] py-32 relative">
+        <div class="" >
+            
+        </div>
+    </section>
+
 @endsection

@@ -34,4 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
         showAlert(page2Alert);
     }
 });
+
+    function openModal() {
+        document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('confirmModal').classList.add('hidden');
+    }
 </script>

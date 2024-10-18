@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Http\Controllers\Admin_Instansi\AdminAgency;
+use App\Models\Message;
 use App\Models\People;
 use App\Models\Officer;
 use App\Models\UserAccount;
@@ -29,7 +30,8 @@ class DatabaseSeeder extends Seeder
             OfficerSeeder::class,
             CategorySeeder::class,
             AgencySeeder::class,
-            UserAccountSeeder::class
+            UserAccountSeeder::class,
+            MessageSeeder::class,
         ]);
     }
 }

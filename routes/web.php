@@ -86,12 +86,10 @@ Route::prefix('admin_instansi')->group(function() {
     Route::get('/instansi/{id}/laporan', [AgencyController::class, 'laporan'])->name('instansi.laporan');
     Route::post('/tanggapan/instansi', [ResponseInstansiController::class, 'createOrUpdate'])->name('tanggapan.instansi');
     Route::resource( 'kelola', ManageController::class);
-
 });
 
 Route::get('instansi', [InstansiController::class, 'index'])->name('instansi');
 Route::get('/instansi/search', [InstansiController::class, 'search'])->name('instansi.search');
-Route::get('/instansi/{name}', [InstansiController::class, 'show'])->name('instansi.show');
 Route::get('/instansi/{slug}', [InstansiController::class, 'show'])->name('instansi.show');
 
 

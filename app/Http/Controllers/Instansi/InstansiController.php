@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class InstansiController extends Controller
 {
     public function index(){
-        $instansis = Agency::paginate(2)->withQueryString();
+        $instansis = Agency::paginate(20)->withQueryString();
        return view('user.instansi.index', compact('instansis'));
     }
      public function read(){

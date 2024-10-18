@@ -14,21 +14,20 @@ use Illuminate\Support\Facades\Mail;
 
 class ResponseInstansiController extends Controller
 {
-    public function createOrUpdate(Request $request){
+    public function createOrUpdate(Request $request) {
         $laporan = Message::where('id_message', $request->id_message)->first();
 
         $tanggapan = ResponseInstansi::where('id_message', $request->id_message)->first();
-        $id_instansi = $laporan->agency_id;
 
-        if($tanggapan) {
+        if ($tanggapan) {
             $laporan->update(['status' => $request->status]);
 
             $user = Auth::guard('people')->user();
 
             $tanggapan->update([
-            'response_date' => date('Y-m-d'),
-            'response' => $request->response ,
-            'id_user' => Auth::guard('people')->user()->id,
+                'response_date' => date('Y-m-d'),
+                'response' => $request->response,
+                'id_user' => $user->id,
             ]);
 
             if ($request->status == 'proses') {
@@ -37,17 +36,18 @@ class ResponseInstansiController extends Controller
                 Mail::to($laporan->email)->send(new DoneEmail($laporan, $tanggapan));
             }
 
-            return redirect()->route('instansi.index', compact('laporan','tanggapan','id_instansi'));
+            // Redirect ke detail instansi menggunakan agency_id
+            return redirect()->route('admin_instansi.show', ['id' => $laporan->agency_id])->with('status', 'Berhasil Dikirim');
         } else {
             $laporan->update(['status' => $request->status]);
 
             $user = Auth::guard('people')->user();
 
-            $tanggapan = ResponseInstansi::create ([
+            $tanggapan = ResponseInstansi::create([
                 'id_message' => $request->id_message,
                 'response_date' => date('Y-m-d'),
-                'response' => $request->response ,
-                'id_user' => Auth::guard('people')->user()->id,
+                'response' => $request->response,
+                'id_user' => $user->id,
             ]);
 
             if ($request->status == 'proses') {
@@ -56,10 +56,9 @@ class ResponseInstansiController extends Controller
                 Mail::to($laporan->email)->send(new DoneEmail($laporan, $tanggapan));
             }
 
-
-        return redirect()->route('admin_instansi.show', compact('laporan','tanggapan','id_instansi'))->with('status', 'Berhasil Dikirim');
+            // Redirect ke detail instansi menggunakan agency_id
+            return redirect()->route('admin_instansi.show', ['id' => $laporan->agency_id])->with('status', 'Berhasil Dikirim');
         }
+    }
 
-
-   }
 }
