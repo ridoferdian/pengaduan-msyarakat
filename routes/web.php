@@ -46,6 +46,8 @@ Route::middleware('guest')->group(function() {
     Route::post('/login/auth', [AuthController::class, 'authenticate'])->name('login');
     Route::post('register/auth', [AuthController::class, 'register'])->name('register');
     Route::get('/logout', [AuthController::class, 'logout'])->name('pekat.logout');
+    Route::get('password/reset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+
     Route::get('/search', [SearchController::class, 'index'])->name('search');
 });
 
@@ -93,6 +95,7 @@ Route::get('instansi', [InstansiController::class, 'index'])->name('instansi');
 Route::get('/instansi/search', [InstansiController::class, 'search'])->name('instansi.search');
 Route::get('/instansi/{name}', [InstansiController::class, 'show'])->name('instansi.show');
 Route::get('/instansi/{slug}', [InstansiController::class, 'show'])->name('instansi.show');
+Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
 
 Route::get('/cetak', function() {

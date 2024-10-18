@@ -18,20 +18,20 @@ class AgencySeeder extends Seeder
              'name' => 'Kementerian Uang',
              'type' => 'Kementerian',
              'prefix_sms' => '-',
-             'slug' => 'name'
+             'slug' => 'Kementerian-Uang'
         ],
             ['parent' => '-',
              'name' => 'Pemkot Uang',
              'type' => 'Pemkot',
              'prefix_sms' => '-',
-             'slug' => 'a'
+             'slug' => 'Pemkot-Uang'
 
         ],
             ['parent' => '-',
              'name' => 'Lembaga Uang',
              'type' => 'Lembaga',
              'prefix_sms' => '-',
-             'slug' => 'b'
+             'slug' => 'Lembaga-Uang'
         ],
         ]);
     }

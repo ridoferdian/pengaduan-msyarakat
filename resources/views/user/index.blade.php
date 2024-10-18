@@ -276,9 +276,14 @@
             </div>
             <button type="submit" class="bg-blue-500 flex text-white py-2 px-4 rounded-md">Login</button>
         </form>
-        <button id="closeModal" class="mt-4  bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
+        <div class="mt-4">
+            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline">Lupa password?</a>
+        </div>
+
+        <button id="closeModal" class="mb-3  bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
     </div>
 </div>
+
 @endsection
 
 
