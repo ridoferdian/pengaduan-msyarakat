@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Database\Seeders\UserAcountSeeder;
 
+use function PHPUnit\Framework\returnArgument;
+
 class AuthController extends Controller
 {
 
@@ -30,7 +32,7 @@ class AuthController extends Controller
         $password = Hash::check($request->password, $username->password);
 
         if (!$password) {
-            return redirect()->back()->with(['pesan' => 'Password tidak sesuai']);
+            return redirect()->back()->with(['error' => 'Password tidak sesuai']);
         }
 
 
@@ -83,6 +85,10 @@ class AuthController extends Controller
 
     }
 
+public function passwordreset(){
+   return view('user.showLinkRequestForm');
+   
+}
 
     public function logout(Request $request)
     {
@@ -94,5 +100,6 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
 
 }

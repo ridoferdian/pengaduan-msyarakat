@@ -41,9 +41,9 @@
                                 <td class="pl-6 py-2 text-primary ">Foto</td>
                                 <td class="py-2">:</td>
                                 <td class="py-2 pl-4 text-primary" >
-                                    @if ($laporan->photo)
+                                    @if ($pengaduan->photo)
                                         @php
-                                            $photos = json_decode($laporan->photo);
+                                            $photos = json_decode($pengaduan->photo);
                                         @endphp
                                         <div class="mt-3 flex j">
                                         @foreach ($photos as $photo)
