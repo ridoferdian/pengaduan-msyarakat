@@ -284,15 +284,15 @@
         <button id="closeModal" class="mt-4 bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
 
         @if (Session::has('error'))
-
         <div class="relative">
             <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10">Lupa password?</a>
         </div>
         @endif
+
     </div>
 </div>
 
-    
+
 @endsection
 
 

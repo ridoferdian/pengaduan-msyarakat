@@ -6,4 +6,7 @@
     @apply text-sky-800 border-b-sky-800 pb-3 border-b-2;
 }
 
-
+.rotate-up {
+    @apply -rotate-180;
+  }
+  
