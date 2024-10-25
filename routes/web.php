@@ -92,7 +92,7 @@ Route::prefix('admin_instansi')->group(function() {
 
 Route::get('instansi', [InstansiController::class, 'index'])->name('instansi');
 Route::get('/instansi/search', [InstansiController::class, 'search'])->name('instansi.search');
-Route::get('/instansi/{slug}', [InstansiController::class, 'show'])->name('instansi.show');
+Route::get('/instansi/{slug}/{status?}', [InstansiController::class, 'show'])->name('instansi.show');
 Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
 

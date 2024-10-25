@@ -187,7 +187,7 @@ class PublicController extends Controller
         $message->delete();
         return redirect(route('laporan', 'me'));
     }
-
+    
 
 
 

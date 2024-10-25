@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Instansi;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Agency;
+use App\Models\Message;
 use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 class InstansiController extends Controller
 {
     public function index(){
@@ -28,11 +31,36 @@ class InstansiController extends Controller
          return view('user.instansi.search-results', compact('instansis'));
      }
 
-     public function show($slug)
-     {
-         $instansi = Agency::where('slug', $slug)->firstOrFail();
-         return view('user.instansi.show', compact('instansi'));
-     }
+
+    public function show($slug, Request $request)
+{
+    // Temukan instansi berdasarkan slug
+    $instansi = Agency::where('slug', $slug)->firstOrFail();
+
+    // Dapatkan filter status dari request
+    $status = $request->input('status');
+
+    switch ($status) {
+        case 'waiting':
+            $pengaduan = Message::where('status', '0')->paginate(10);
+            break;
+        case 'proses':
+            $pengaduan = Message::where('status', 'proses')->paginate(10);
+            break;
+        case 'done':
+            $pengaduan = Message::where('status', 'done')->paginate(10);
+            break;
+        default:
+            // Jika tidak ada filter, tampilkan semua pesan
+            $pengaduan = Message::where('agency_id', $instansi->id)->paginate(10);
+            break;
+    }
+    // Kirim instansi, status, dan pesan ke view
+    return view('user.instansi.show', compact('instansi', 'status', 'pengaduan'));
+}
+
+
+
 
 
 
