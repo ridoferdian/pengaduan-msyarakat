@@ -19,7 +19,7 @@ class AgencySeeder extends Seeder
              'type' => 'Kementerian',
              'prefix_sms' => '-',
              'slug' => 'Kementerian-Uang'
-        ],
+        ],  
             ['parent' => '-',
              'name' => 'Pemkot Uang',
              'type' => 'Pemkot',

@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +33,7 @@
                 <div class="flex ml-10 mt-5">
                     <i data-feather="calendar" class="mt-1 mr-2 w-[20px] " ></i>
                     <p class="text-sm font-light mt-2">{{ $pengaduan->date->format('d F') }}</p>
-                    @if ($pengaduan->status == '0')
+                    @if ($pengaduan->status == 'pending')
                     <p class="text-sm font-light mt-2 ml-3" >pending</p>
                     @elseif($pengaduan->status == 'proses')
                     <p class="text-sm font-light mt-2 ml-3">{{ ucwords($pengaduan->status) }}</p>

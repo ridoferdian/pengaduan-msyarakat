@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Instansi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Agency;
+use App\Models\Category;
+use App\Models\Message;
+use Carbon\Carbon;
 use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class InstansiController extends Controller
 {
     public function index(){
@@ -28,11 +32,25 @@ class InstansiController extends Controller
          return view('user.instansi.search-results', compact('instansis'));
      }
 
-     public function show($slug)
+
+     public function show($slug, Request $request)
      {
          $instansi = Agency::where('slug', $slug)->firstOrFail();
-         return view('user.instansi.show', compact('instansi'));
+         $categorys = Category::all();
+         $status = $request->input('status');
+
+         $pengaduan = Message::where('agency_id', $instansi->id)
+                     ->when($status, function ($query, $status) {
+                         return $query->where('status', $status);
+                     })
+                     ->paginate(10);
+
+         return view('user.instansi.show', compact('instansi', 'status', 'pengaduan', 'categorys'));
      }
+
+
+
+
 
 
 

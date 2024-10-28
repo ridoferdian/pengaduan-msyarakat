@@ -57,6 +57,7 @@
                 <p class="ml-2 text-sm">{{ $message }}</p>
                 @enderror
 
+
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
                         <option value="">Pilih kategori Laporan Anda</option>
@@ -100,6 +101,7 @@
                 @error('report')
                         <p class="ml-2 text-sm">{{ $message }}</p>
                 @enderror
+               
 
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>

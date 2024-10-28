@@ -17,7 +17,7 @@
 
     @vite('resources/css/app.css')
 
-
+    @yield('style')
 
     <style>
          .transition-transform {
@@ -171,11 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
             var keyword = $(this).val();
 
             $.ajax({
-                url: "{{ route('instansi.search') }}", // Route menuju ke method search
+                url: "{{ route('instansi.search') }}",
                 type: "GET",
                 data: { keyword: keyword },
                 success: function(data) {
-                    $('#resultsTableBody').html(data); // Ganti isi tabel dengan hasil pencarian
+                    $('#resultsTableBody').html(data); 
                 }
             });
         });

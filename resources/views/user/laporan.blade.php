@@ -130,7 +130,7 @@
                     <p class="text-2xl font-nunito">{{ $v->user->name }}</p>
                     <div class="flex">
                         <p class="text-xs font-light mt-2">{{ $v->date->format('d F') }}</p>
-                        @if ($v->status == '0')
+                        @if ($v->status == 'pending')
                         <p class="text-xs font-light mt-2 ml-3">Pending</p>
                         @else
                         <p class="text-xs font-light mt-2 ml-3">{{ ucwords($v->status) }}</p>
@@ -200,7 +200,7 @@
                     <p class="text-2xl font-nunito">{{ $v->name }}</p>
                     <div class="flex">
                         <p class="text-xs font-light mt-2">{{ $v->date->format('d F') }}</p>
-                        @if ($v->status == '0')
+                        @if ($v->status == 'pending')
                         <p class="text-xs font-light mt-2 ml-3">Pending</p>
                         @else
                         <p class="text-xs font-light mt-2 ml-3">{{ ucwords($v->status) }}</p>

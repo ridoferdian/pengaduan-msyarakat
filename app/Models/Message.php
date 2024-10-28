@@ -34,7 +34,7 @@ class Message extends Model
     public function getStatusAttribute($value)
     {
         switch ($value) {
-            case '0':
+            case 'pending':
                 return 'pending';
             case 'proses':
                 return 'proses';

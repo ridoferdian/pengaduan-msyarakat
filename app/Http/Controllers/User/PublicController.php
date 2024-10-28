@@ -72,7 +72,7 @@ class PublicController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $pengaduan = Message::create([
-            'date' => date('Y-m-d h:i:s'),
+            'date' => $data['date'],
             'name' => $name,
             'category_id' => $data['category_id'],
             'user_id' => $userId,
@@ -82,7 +82,7 @@ class PublicController extends Controller
             'agency_id' => $data['agency_id'],
             'code' => $this->generateCode(),
             'photo' => !empty($photoPaths) ? json_encode($photoPaths) : null,
-            'status' => '0',
+            'status' => 'pending',
         ]);
         if ($request->filled('email')) {
             Mail::to($request->input('email'))->send(new SendEmail($user, $pengaduan));
@@ -104,26 +104,24 @@ class PublicController extends Controller
         $today = Carbon::now()->format('Ymd');
         $prefix = 'P' . $today;
 
-        // Ambil nomor urut terakhir untuk hari ini
-        $latest = DB::table('messages')
-            ->whereDate('date', Carbon::today())
-            ->latest('id_message')
-            ->first();
-
         $sequence = 1;
+        $uniqueCodeFound = false;
 
-        if ($latest) {
-            // Ambil nomor urut terakhir dan increment
-            $latestCode = $latest->code;
-            $latestSequence = intval(substr($latestCode, -4)); // Ambil 4 digit terakhir dari kode
-            $sequence = $latestSequence + 1;
+        while (!$uniqueCodeFound) {
+            $code = $prefix . str_pad($sequence, 4, '0', STR_PAD_LEFT);
+
+            $exists = DB::table('messages')->where('code', $code)->exists();
+
+            if (!$exists) {
+                $uniqueCodeFound = true;
+            } else {
+                $sequence++;
+            }
         }
-
-        // Format nomor urut menjadi 4 digit dengan leading zeros
-        $code = $prefix . str_pad($sequence, 4, '0', STR_PAD_LEFT);
 
         return $code;
     }
+
 
     public function show($kode) {
         $id = substr($kode, 0, -8);

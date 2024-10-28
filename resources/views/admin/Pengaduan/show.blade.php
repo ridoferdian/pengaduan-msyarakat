@@ -87,16 +87,16 @@
                     <div class="font-poppins block mt-4 mx-4">
                         <label for="status" class="block">Status :</label>
                         <select name="status" id="status" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm">
-                            @if($pengaduan->status == '0')
-                            <option selected value="0">Pending</option>
+                            @if($pengaduan->status == 'pending')
+                            <option selected value="pending">Pending</option>
                             <option value="proses">Proses</option>
                             <option value="done">Selesai</option>
                             @elseif( $pengaduan->status == 'proses')
-                            <option value="0">Pending</option>
+                            <option value="pending">Pending</option>
                             <option selected value="proses">Proses</option>
                             <option value="done">Selesai</option>
                             @else
-                            <option value="0">Pending</option>
+                            <option value="pending">Pending</option>
                             <option value="proses">Proses</option>
                             <option selected value="done">Selesai</option>
                             @endif

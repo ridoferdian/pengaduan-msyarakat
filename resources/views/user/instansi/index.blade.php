@@ -13,10 +13,9 @@
 
             <div class="overflow-x-auto mx-4 lg:mx-0" >
                 <div class="min-w-full">
-                    <form action="">
+
                         <input type="text" id="searchKeyword" placeholder="Cari aduan" class="min-w-full block py-3 px-3 text-sm border border-gray-300 rounded-sm shadow-sm  focus:ring-0 hover:border-gray-500  focus:border-gray-500 " >
                         <div id="read" class="mt-3"></div>
-                    </form>
                 </div>
 
                 <table class="min-w-full mt-20 ">
