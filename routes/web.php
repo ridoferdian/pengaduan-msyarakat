@@ -49,6 +49,11 @@ Route::middleware('guest')->group(function() {
     Route::get('passwordreset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
 
     Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::get('instansi', [InstansiController::class, 'index'])->name('instansi');
+    Route::get('/instansi/search', [InstansiController::class, 'search'])->name('instansi.search');
+    Route::get('/instansi/{slug}', [InstansiController::class, 'show'])->name('instansi.show');
+    Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
+
 });
 
 Route::prefix('admin')->group(function(){
@@ -79,21 +84,28 @@ Route::prefix('admin')->group(function(){
 });
 
 Route::prefix('admin_instansi')->group(function() {
-    Route::get('/', [AdminAgencyController::class, 'index'])->name('admin_instansi.index');
-    Route::post('/login/auth', [AdminAgencyController::class, 'authenticate'])->name('admin_instansi.login');
-    Route::get('/logout', [AdminAgencyController::class, 'logout'])->name('admin_instansi.logout');
-    Route::get('/dashboard', [InstansiDashboardController::class, 'index'])->name('admin_instansi_dashboard.index');
-    Route::get('/instansi', [AgencyController::class, 'index'])->name('instansi.index');
-    Route::get('/instansi/{id}/detail', [AgencyController::class, 'lihatInstansi'])->name('admin_instansi.show');
-    Route::get('/instansi/{id}/laporan', [AgencyController::class, 'laporan'])->name('instansi.laporan');
-    Route::post('/tanggapan/instansi', [ResponseInstansiController::class, 'createOrUpdate'])->name('tanggapan.instansi');
-    Route::resource( 'kelola', ManageController::class);
+
+        Route::middleware('IsAgency')->group(function() {
+            Route::get('/kelola', [ManageController::class, 'index'])->name('kelola.index');
+            Route::resource( 'kelola', ManageController::class);
+        });
+
+        Route::middleware('IsAdminAgency')->group(function() {
+            Route::get('/instansi', [AgencyController::class, 'index'])->name('instansi.index');
+            Route::get('/instansi/{id}/detail', [AgencyController::class, 'lihatInstansi'])->name('admin_instansi.show');
+            Route::get('/instansi/{id}/laporan', [AgencyController::class, 'laporan'])->name('instansi.laporan');
+            Route::get('/dashboard', [InstansiDashboardController::class, 'index'])->name('admin_instansi_dashboard.index');
+            Route::post('/tanggapan/instansi', [ResponseInstansiController::class, 'createOrUpdate'])->name('tanggapan.instansi');
+            Route::get('/logout', [AdminAgencyController::class, 'logout'])->name('admin_instansi.logout');
+        });
+
+        Route::middleware('IsGuestAgency')->group(function() {
+            Route::get('/', [AdminAgencyController::class, 'index'])->name('admin_instansi.index');
+            Route::post('/login/auth', [AdminAgencyController::class, 'authenticate'])->name('admin_instansi.login');
+        });
+
 });
 
-Route::get('instansi', [InstansiController::class, 'index'])->name('instansi');
-Route::get('/instansi/search', [InstansiController::class, 'search'])->name('instansi.search');
-Route::get('/instansi/{slug}', [InstansiController::class, 'show'])->name('instansi.show');
-Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
 
 Route::get('/cetak', function() {

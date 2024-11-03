@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsOfficer
+class IsGuestAgency
 {
     /**
      * Handle an incoming request.
@@ -16,13 +16,10 @@ class IsOfficer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('officer')->check()) {
-            if(Auth::guard('officer')->user()->level == 'officer') {
-                return $next($request);
-            } elseif (Auth::guard('officer')->user()->level == 'admin'){
-                return $next($request);
-            }
+        if (!Auth::guard('people')->check() ) {
+            return $next($request);
         }
-        return redirect()->route('admin.formLogin');
+
+        return redirect()->route('admin_instansi_dashboard.index');
     }
 }

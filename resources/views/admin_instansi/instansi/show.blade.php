@@ -1,6 +1,11 @@
 @extends('admin_instansi.layouts.dashboard-layout')
 
 @section('title', 'Instansi')
+@section('header')
+<a href="{{ route('instansi.index') }}" class=" hover:underline text-sky-500 ">Data Instansi</a>
+<p class="ml-2" >/</p>
+<p class="ml-2">Laporan</p>
+@endsection
 
 @section('content')
 

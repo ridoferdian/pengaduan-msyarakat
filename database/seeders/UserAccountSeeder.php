@@ -31,7 +31,7 @@ class UserAccountSeeder extends Seeder
             'username' => 'ferdian',
             'email' => 'admin@admin',
             'password' => Hash::make('123'),
-            'role' => 'admin_agency',
+            'role' => 'super_admin',
             'telp' => '0812325543',
             'agency_id' => '2'
             ],

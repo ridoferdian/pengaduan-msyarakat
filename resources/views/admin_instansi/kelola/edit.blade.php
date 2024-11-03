@@ -3,7 +3,7 @@
 @section('title', 'Edit Admin')
 
 @section('header')
-    <a href="{{ route('kelola.index') }}" class=" hover:underline text-sky-500 ">Data Petugas</a>
+    <a href="{{ route('kelola.index') }}" class=" hover:underline text-sky-500 ">Data Admin</a>
     <p class="ml-2" >/</p>
     <p class="ml-2">Edit Admin</p>
 @endsection

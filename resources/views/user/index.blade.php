@@ -48,16 +48,21 @@
                     <input type="text" placeholder="Ketik Judul Laporan Anda" name="title" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('title') }}">
                 </div>
                 @error('title')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
                 <div>
                     <textarea name="report" id="" placeholder="Ketik Isi Laporan Anda" rows="5" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" >{{ old('report') }}</textarea>
                 </div>
                 @error('report')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
 
-
+                <div>
+                    <input type="text" id="dateInput" placeholder="Pilih Tanggal Kejadian" onfocus="(this.type='date')" onblur="this.type='text'"  name="event_date" id="tanggal" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('event_date') }}" >
+                </div>
+                @error('event_date')
+                <p class="ml-2 text-sm">{{ $message }}</p>
+                @enderror
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
                         <option value="">Pilih kategori Laporan Anda</option>
@@ -75,6 +80,9 @@
                     </select>
                 </div>
 
+
+
+
                 <div class="border border-gray-300 py-1 px-1 rounded-md ">
                     <input type="file" name="photos[]" multiple class="cursor-pointer">
 
@@ -86,22 +94,28 @@
             </form>
         </div>
 
-        <div  class="relative hidden  font-poppins"  id="form2" >
+        <div  class="relative hidden font-poppins"  id="form2" >
             <form  action="{{ route('submit.anonime') }}" method="post" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div>
                     <input type="text" placeholder="Ketik Judul Laporan Anda" name="title" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('title') }}"  >
                 </div>
                 @error('title')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
                 <div>
                     <textarea name="report" id="" placeholder="Ketik Isi Laporan Anda" rows="5" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm"  >{{ old('report') }}</textarea>
                 </div>
                 @error('report')
-                        <p class="ml-2 text-sm">{{ $message }}</p>
+                        <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
-               
+
+                <div>
+                    <input type="text" id="dateInput" placeholder="Pilih Tanggal Kejadian" onfocus="(this.type='date')" onblur="this.type='text'"  name="event_date" id="tanggal" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('event_date') }}" >
+                </div>
+                @error('event_date')
+                            <p class="ml-2 text-sm">{{ $message }}</p>
+                @enderror
 
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
@@ -162,7 +176,7 @@
 </section>
 
 {{-- jumlah laporan --}}
-<section class="mt-[38rem] flex justify-center bg-primary"  >
+<section class="mt-[44rem] flex justify-center bg-primary"  >
     <div class="block py-7 ">
         <h1 class="text-white font-ubuntu text-3xl tracking-wider">JUMLAH LAPORAN </h1>
         <p class="flex justify-center mt-6 text-white font-ubuntu text-5xl "> {{ $jumlahLaporan }} </p>
@@ -221,12 +235,12 @@
             <div class="border-b border-primary py-8 relative ">
             <div class="flex ml-4 justify-between">
                 <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                <p class="text-sm">{{ $message->date->diffForHumans() }}</p>
+                <p class="text-sm">{{ $message->report_timestamp->diffForHumans() }}</p>
             </div>
             <div class="ml-20 absolute top-5">
                 <p class="text-2xl font-nunito">{{ $message->name === 'anonymous' ? 'Anonymous' : $message->name }}</p>
                 <div class="flex">
-                    <p class="text-xs font-light mt-2">{{ $message->date->format('d F') }}</p>
+                    <p class="text-xs font-light mt-2">{{ $message->report_timestamp->format('d F') }}</p>
                     @if ($message->status == '0')
                     <p class="text-xs font-light mt-2 ml-3">Pending</p>
                     @else
@@ -263,36 +277,6 @@
 
 {{-- end laporan --}}
 
-<div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 w-full box-border">
-    <div class="bg-white p-8 rounded-md shadow-2xl relative max-w-md w-full">
-        @if (Session::has('pesan'))
-            <div class="mt-2">
-                {{ Session::get('pesan') }}
-            </div>
-        @endif
-        <h2 class="text-xl font-bold mb-4 font-nunito">Login</h2>
-        <form action="{{ route('login') }}" method="post" class="font-poppins">
-            @csrf
-            <div class="mb-4">
-                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                <input type="text" name="username" id="username" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required autocomplete="off" value="{{ old('username') }}">
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" name="password" id="password" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required>
-            </div>
-            <button type="submit" class="bg-blue-500 flex text-white py-2 px-4 rounded-md">Login</button>
-        </form>
-        <button id="closeModal" class="mt-4 bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
-
-        @if (Session::has('error'))
-        <div class="relative">
-            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10">Lupa password?</a>
-        </div>
-        @endif
-
-    </div>
-</div>
 
 
 @endsection

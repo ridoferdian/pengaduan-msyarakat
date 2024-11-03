@@ -6,7 +6,6 @@
 <section class="  text-white">
     <div class="px-40 py-32 font-poppins bg-primary">
         <div class="">
-            <!-- Tampilkan hasil pencarian dengan input dari pengguna -->
             <p class="text-2xl">
                 Hasil Pencarian:
                 @if(request('q'))
@@ -28,12 +27,12 @@
                 <div class="border-b border-white py-5 relative mt-10">
                     <div class="flex ml-4 justify-between">
                         <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                        <p class="text-sm">{{ $message->date->diffForHumans() }}</p>
+                        <p class="text-sm">{{ $message->report_timestamp->diffForHumans() }}</p>
                     </div>
                     <div class="ml-20 absolute top-0">
                         <p class="text-2xl font-nunito">{{ $message->name === 'anonymous' ? 'Anonymous' : $message->name }}</p>
                         <div class="flex">
-                            <p class="text-xs font-light mt-2">{{ $message->date->format('d F') }}</p>
+                            <p class="text-xs font-light mt-2">{{ $message->report_timestamp->format('d F') }}</p>
                             @if ($message->status == '0')
                                 <p class="text-xs font-light mt-2 ml-3">Pending</p>
                             @else

@@ -52,6 +52,6 @@
     <div class="flex justify-center mb-20">
         {{ $instansis->links() }}
     </div>
-
+   
 
 @endsection

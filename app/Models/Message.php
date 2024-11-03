@@ -17,7 +17,7 @@ class Message extends Model
     protected $primaryKey = 'id_message';
 
     protected $fillable = [
-        'date',
+        'event_date',
         'nik',
         'name',
         'category_id',
@@ -45,10 +45,11 @@ class Message extends Model
         }
     }
 
-    protected $dates = ['date'];
+
 
     protected $casts = [
-        'date' => 'datetime',
+        'report_timestamp' => 'datetime',
+        'event_date' => 'datetime',
     ];
 
     public function user(){

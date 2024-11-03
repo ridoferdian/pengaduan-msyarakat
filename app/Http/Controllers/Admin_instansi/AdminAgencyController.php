@@ -30,10 +30,17 @@ class AdminAgencyController extends Controller
 
 
         if (Auth::guard('people')->attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect()->route('admin_instansi_dashboard.index');
-        } else {
-            return redirect()->back()->with(['pesan' => 'Akun tidak terdaftar!']);
+            $user = Auth::guard('people')->user();
+
+            if (in_array($user->role, ['super_admin', 'admin_agency'])) {
+                return redirect()->route('admin_instansi_dashboard.index');
+            } else {
+                Auth::guard('people')->logout();
+                return redirect()->route('admin_instansi.index')->with('error', 'Anda tidak memiliki izin untuk mengakses area ini.'
+                );
+            }
         }
+        return back()->with('error', 'Akun tidak terdaftar');
     }
 
     public function logout(Request $request) {

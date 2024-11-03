@@ -46,6 +46,7 @@ class PublicController extends Controller
             'title' => 'required',
             'report' => 'required|min:10',
             'anonymous' => 'nullable|boolean',
+            'event_date' => 'required',
             'photos.*' => 'nullable|image|max:2048' // Maksimal 2MB
         ]);
 
@@ -71,8 +72,11 @@ class PublicController extends Controller
 
         date_default_timezone_set('Asia/Bangkok');
 
+        $waktuSekarang = Carbon::now();;
+
         $pengaduan = Message::create([
-            'date' => $data['date'],
+            'event_date' => $data['event_date'],
+            'report_timestamp' => $waktuSekarang,
             'name' => $name,
             'category_id' => $data['category_id'],
             'user_id' => $userId,
@@ -91,7 +95,7 @@ class PublicController extends Controller
         }
 
         if ($pengaduan) {
-            $kode = $pengaduan->id_message .  date('Ymd', strtotime($pengaduan->date))  ;
+            $kode = $pengaduan->id_message .  date('Ymd', strtotime($pengaduan->event_date))  ;
 
             return redirect()->route('laporan.show', ['kode' => $kode])->with(['pengaduan' => 'Berhasil terkirim!', 'type' => 'success']);
         } else {
@@ -129,7 +133,7 @@ class PublicController extends Controller
 
         $dateFormatted = date('Y-m-d', strtotime($date));
         $pengaduan = Message::where('id_message', $id)
-                            ->whereDate('date', $dateFormatted)
+                            ->whereDate('event_date', $dateFormatted)
                             ->firstOrFail();
 
         return view('laporan.show', compact('pengaduan'));
@@ -149,7 +153,7 @@ class PublicController extends Controller
 
 
         if ($siapa == 'me') {
-            $pengaduan = Message::where('user_id', Auth::guard('people')->user()->id)->orderBy('date', 'desc')->get();
+            $pengaduan = Message::where('user_id', Auth::guard('people')->user()->id)->orderBy('event_date', 'desc')->get();
             Carbon::setLocale('id');
             foreach ($pengaduan as $message) {
                 $message->date = Carbon::parse($message->date);
@@ -158,7 +162,7 @@ class PublicController extends Controller
             return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa, 'categorys' => $categorys,'agencys' => $agencys ]);
         } else {
             $pengaduan = Message::where('status', '!=', '0')
-            ->orderBy('date', 'desc')
+            ->orderBy('event_date', 'desc')
             ->get();
             $message = Message::all();
             return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa,'categorys' => $categorys, 'message' => $message, 'agencys' => $agencys ]);
@@ -185,9 +189,6 @@ class PublicController extends Controller
         $message->delete();
         return redirect(route('laporan', 'me'));
     }
-
-
-
 
 
 }

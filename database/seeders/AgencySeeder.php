@@ -18,8 +18,8 @@ class AgencySeeder extends Seeder
              'name' => 'Lapas Perempuan Kelas IIA Bandung',
              'type' => 'Kementerian',
              'prefix_sms' => '-',
-             'slug' => 'Kementerian-Uang'
-        ],  
+             'slug' => 'Lapas-Perempuan-Kelas-IIA-Bandung'
+        ],
             ['parent' => '-',
              'name' => 'Pemkot Uang',
              'type' => 'Pemkot',

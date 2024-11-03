@@ -4,7 +4,7 @@
 
 @section('header')
         <p class="ml-2">Kelola Admin</p>
-    @endsection
+@endsection
 
 @section('content')
 
@@ -43,27 +43,25 @@
                         <td>{{ $admin->role }}</td>
                         <td class="border-b-2 border-sky-300 px-4 py-2 ">
                             <span class="flex">
-                                <a href="{{ route('kelola.edit', $admin->id) }}" class="bg-red-400 w-6 h-6 flex items-center justify-center rounded-sm mx-2" >
-                                    <i data-feather="upload" class="w-4 h-4 text-white "></i>
+                                <a href="{{ route('kelola.edit', $admin->id) }}" class="font-bold mr-2" >
+                                    Edit
                                 </a>
-
-                                <button type="button" onclick="openModal()" class="font-bold">Hapus</button>
-                                <div id="confirmModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+                                <span>|</span>
+                                <button type="button" onclick="openModal({{ $admin->id }})" class="font-bold ml-2">Hapus</button>
+                                <div id="confirmModal{{ $admin->id }}" class="hidden fixed z-10 inset-0 overflow-y-auto">
                                     <div class="flex items-center justify-center min-h-screen">
                                         <div class="bg-white p-6 rounded-lg shadow-lg">
                                             <p>Yakin untuk dihapus?</p>
                                                 <div class="flex justify-end mt-4">
-                                                    <button onclick="closeModal()" class="bg-gray-300 px-4 py-2 rounded mr-2">Tidak</button>
-                                                    <button onclick="document.getElementById('deleteForm').submit()" class="bg-red-500 text-white px-4 py-2 rounded">Oke</button>
+                                                    <button onclick="closeModal({{ $admin->id }})" class="bg-gray-300 px-4 py-2 rounded mr-2">Tidak</button>
+                                                    <button onclick="document.getElementById('deleteForm{{ $admin->id }}').submit()" class="bg-red-500 text-white px-4 py-2 rounded">Oke</button>
                                                 </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                        <form id="deleteForm" action="{{ route('kelola.destroy', $admin->id) }}" method="post">
+                                        <form id="deleteForm{{ $admin->id }}" action="{{ route('kelola.destroy', $admin->id) }}" method="post">
                                             @csrf
-                                            @method('delete')
+                                            @method('DELETE')
                                         </form>
 
                             </span>
@@ -76,6 +74,16 @@
         </div>
     </section>
 
+
+    <script>
+        function openModal(id) {
+        document.getElementById('confirmModal' + id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+        document.getElementById('confirmModal' + id).classList.add('hidden');
+    }
+    </script>
 
 
 @endsection

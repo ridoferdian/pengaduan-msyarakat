@@ -96,6 +96,37 @@
 
 @yield('content')
 
+<div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 w-full box-border">
+    <div class="bg-white p-8 rounded-md shadow-2xl relative max-w-md w-full">
+        @if (Session::has('pesan'))
+            <div class="mt-2">
+                {{ Session::get('pesan') }}
+            </div>
+        @endif
+        <h2 class="text-xl font-bold mb-4 font-nunito">Login</h2>
+        <form action="{{ route('login') }}" method="post" class="font-poppins">
+            @csrf
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" name="username" id="username" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required autocomplete="off" value="{{ old('username') }}">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="password" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <button type="submit" class="bg-blue-500 flex text-white py-2 px-4 rounded-md">Login</button>
+        </form>
+        <button id="closeModal" class="mt-4 bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
+
+        @if (Session::has('error'))
+        <div class="relative">
+            <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10">Lupa password?</a>
+        </div>
+        @endif
+
+    </div>
+</div>
+
 
 <footer class="bg-slate-200 pt-24 pb-6 ">
     <div class="container">
@@ -175,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: "GET",
                 data: { keyword: keyword },
                 success: function(data) {
-                    $('#resultsTableBody').html(data); 
+                    $('#resultsTableBody').html(data);
                 }
             });
         });

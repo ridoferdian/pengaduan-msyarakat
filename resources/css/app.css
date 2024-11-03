@@ -9,4 +9,7 @@
 .rotate-up {
     @apply -rotate-180;
   }
-  
+
+.translate-lapor {
+    @apply translate-y-6;
+}

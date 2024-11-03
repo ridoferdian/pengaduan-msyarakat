@@ -21,7 +21,7 @@
             @foreach ( $pengaduan as $k => $v )
             <tr>
                 <td>{{ $k += 1 }}</td>
-                <td>{{ $v->date->format('d-M-Y') }}</td>
+                <td>{{ $v->event_date->format('d-M-Y') }}</td>
                 <td>{{ $v->report }}</td>
                 <td>
                      @if ($v->status == 'pending')
