@@ -85,10 +85,28 @@ class AuthController extends Controller
 
     }
 
-public function passwordreset(){
-   return view('user.showLinkRequestForm');
-   
+public function forgot_password(){
+   return view('auth.forgot-password');
+
 }
+
+public function forgot_password_act(Request $request)
+    {
+        
+
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+
+        ]);
+
+
+        $data = [
+            'email' => $request->email
+        ];
+
+
+        return redirect()->route('forgot_password')->with('success', 'Kami telah mengirimkan link reset password ke email anda');
+    }
 
     public function logout(Request $request)
     {

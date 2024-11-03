@@ -46,7 +46,8 @@ Route::middleware('guest')->group(function() {
     Route::post('/login/auth', [AuthController::class, 'authenticate'])->name('login');
     Route::post('register/auth', [AuthController::class, 'register'])->name('register');
     Route::get('/logout', [AuthController::class, 'logout'])->name('pekat.logout');
-    Route::get('passwordreset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot_password');
+    Route::post('/forgot-password', [AuthController::class, 'forgot_password_act'])->name('forgot_password-act');
 
     Route::get('/search', [SearchController::class, 'index'])->name('search');
 });
