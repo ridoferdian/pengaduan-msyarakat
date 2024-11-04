@@ -48,16 +48,21 @@
                     <input type="text" placeholder="Ketik Judul Laporan Anda" name="title" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('title') }}">
                 </div>
                 @error('title')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
                 <div>
                     <textarea name="report" id="" placeholder="Ketik Isi Laporan Anda" rows="5" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" >{{ old('report') }}</textarea>
                 </div>
                 @error('report')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
 
-
+                <div>
+                    <input type="text" id="dateInput" placeholder="Pilih Tanggal Kejadian" onfocus="(this.type='date')" onblur="this.type='text'"  name="event_date" id="tanggal" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('event_date') }}" >
+                </div>
+                @error('event_date')
+                <p class="ml-2 text-sm">{{ $message }}</p>
+                @enderror
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
                         <option value="">Pilih kategori Laporan Anda</option>
@@ -75,6 +80,9 @@
                     </select>
                 </div>
 
+
+
+
                 <div class="border border-gray-300 py-1 px-1 rounded-md ">
                     <input type="file" name="photos[]" multiple class="cursor-pointer">
 
@@ -86,22 +94,32 @@
             </form>
         </div>
 
-        <div  class="relative hidden  font-poppins"  id="form2" >
+        <div  class="relative hidden font-poppins"  id="form2" >
             <form  action="{{ route('submit.anonime') }}" method="post" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div>
                     <input type="text" placeholder="Ketik Judul Laporan Anda" name="title" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('title') }}"  >
                 </div>
                 @error('title')
-                <p class="ml-2 text-sm">{{ $message }}</p>
+                <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
                 <div>
                     <textarea name="report" id="" placeholder="Ketik Isi Laporan Anda" rows="5" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm"  >{{ old('report') }}</textarea>
                 </div>
                 @error('report')
-                        <p class="ml-2 text-sm">{{ $message }}</p>
+                        <p class="ml-2 text-xs">{{ $message }}</p>
                 @enderror
 
+                <div>
+                    <input type="text" id="dateInput" placeholder="Pilih Tanggal Kejadian" onfocus="(this.type='date')" onblur="this.type='text'"  name="event_date" id="tanggal" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('event_date') }}" >
+                </div>
+                @error('event_date')
+                            <p class="ml-2 text-sm">{{ $message }}</p>
+                @enderror
+<<<<<<< HEAD
+
+=======
+>>>>>>> 230abf97b1beb95d768f4580ae0fdd49bfaf69d3
 
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
@@ -162,7 +180,7 @@
 </section>
 
 {{-- jumlah laporan --}}
-<section class="mt-[38rem] flex justify-center bg-primary"  >
+<section class="mt-[44rem] flex justify-center bg-primary"  >
     <div class="block py-7 ">
         <h1 class="text-white font-ubuntu text-3xl tracking-wider">JUMLAH LAPORAN </h1>
         <p class="flex justify-center mt-6 text-white font-ubuntu text-5xl "> {{ $jumlahLaporan }} </p>
@@ -221,12 +239,17 @@
             <div class="border-b border-primary py-8 relative ">
             <div class="flex ml-4 justify-between">
                 <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                <p class="text-sm">{{ $message->date->diffForHumans() }}</p>
+                <p class="text-xs text-gray-500">
+                    {{ $message->report_timestamp ? $message->report_timestamp->diffForHumans() : 'Waktu tidak tersedia' }}
+                </p>
             </div>
             <div class="ml-20 absolute top-5">
                 <p class="text-2xl font-nunito">{{ $message->name === 'anonymous' ? 'Anonymous' : $message->name }}</p>
                 <div class="flex">
-                    <p class="text-xs font-light mt-2">{{ $message->date->format('d F') }}</p>
+                    <p class="text-xs font-light mt-2">
+                        {{ $message->report_timestamp ? $message->report_timestamp->format('d F') : 'Tanggal tidak tersedia' }}
+                    </p>
+
                     @if ($message->status == '0')
                     <p class="text-xs font-light mt-2 ml-3">Pending</p>
                     @else
@@ -263,6 +286,7 @@
 
 {{-- end laporan --}}
 
+<<<<<<< HEAD
 <div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 w-full box-border">
     <div class="bg-white p-8 rounded-md shadow-2xl relative max-w-md w-full">
         @if (Session::has('pesan'))
@@ -293,6 +317,8 @@
 
     </div>
 </div>
+=======
+>>>>>>> 230abf97b1beb95d768f4580ae0fdd49bfaf69d3
 
 
 @endsection

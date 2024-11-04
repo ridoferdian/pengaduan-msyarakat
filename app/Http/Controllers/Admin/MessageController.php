@@ -14,7 +14,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $pengaduan = Message::orderBy('date', 'desc')->get();
+        $pengaduan = Message::orderBy('event_date', 'desc')->get();
 
 
         return view('admin.pengaduan.index', compact('pengaduan'));

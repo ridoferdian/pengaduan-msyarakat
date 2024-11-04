@@ -188,7 +188,16 @@ return [
         ],
         'telp' => [
             'required' => 'nomor hp wajib diisi',
-
+        ],
+        'title' => [
+            'required' => 'judul wajib diisi',
+        ],
+        'report' => [
+            'required' => 'laporan wajib diisi',
+            'min' => 'Aduan anda terlalu pendek'
+        ],
+        'event_date' => [
+            'required' => 'tanggal wajib diisi',
         ],
     ],
 

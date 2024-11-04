@@ -6,14 +6,11 @@
 
 <script>
 
-new DataTable('#table');
-
-feather.replace();
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const page1Alert = document.querySelector('#alert1');
     const page2Alert = document.querySelector('#alert2');
+    const page3Alert = document.querySelector('#alert3');
+    const page4Alert = document.querySelector('#alert4');
 
     function showAlert(alertElement, duration = 3000) {
         alertElement.classList.remove('translate-x-full');
@@ -33,13 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (page2Alert) {
         showAlert(page2Alert);
     }
+    if (page3Alert) {
+        showAlert(page3Alert);
+    }
+    if (page4Alert) {
+        showAlert(page4Alert);
+    }
 });
 
-    function openModal() {
-        document.getElementById('confirmModal').classList.remove('hidden');
-    }
+new DataTable('#table');
 
-    function closeModal() {
-        document.getElementById('confirmModal').classList.add('hidden');
-    }
+feather.replace();
+
 </script>

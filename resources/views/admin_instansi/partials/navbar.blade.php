@@ -18,7 +18,7 @@
              </a>
           </div>
           <div class="relative -right-5">
-            <a href="{{ route('admin_instansi.logout') }}" class="text-white font-nunito mr-4" >Admin</a>
+            <a href="{{ route('admin_instansi.logout') }}" class="text-white font-nunito mr-4" >{{ Auth::guard('people')->user()->name }}</a>
          </li>
           </div>
        </div>

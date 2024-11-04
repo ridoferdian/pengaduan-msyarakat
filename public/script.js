@@ -14,12 +14,6 @@ function showModal() {
     }, 10);
 }
 
-document
-    .getElementById("mainForm")
-    .addEventListener("submit", function (event) {
-        event.preventDefault(); // Mencegah submit form default
-        showModal();
-    });
 
 document.getElementById("loginButton").addEventListener("click", function () {
     showModal();
@@ -35,8 +29,18 @@ document.getElementById("closeModal").addEventListener("click", function () {
     setTimeout(() => {
         modal.classList.add("hidden");
         modal.classList.remove("modal-transition-leave");
-    }, 300); // Durasi transisi
+    }, 300);
 });
+
+
+document
+    .getElementById("mainForm")
+    .addEventListener("submit", function (event) {
+        event.preventDefault();
+        showModal();
+    });
+
+
 
 $(document).ready(function () {
     $("#checkbox1").change(function () {
@@ -60,8 +64,6 @@ $(document).ready(function () {
     });
 });
 
-new DataTable('#table');
+new DataTable("#table");
 
 feather.replace();
-
-

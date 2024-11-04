@@ -35,7 +35,7 @@
                             <tr class="border-t border-primary">
                                 <td class="pl-6 py-2 text-primary ">Tanggal Pengaduan</td>
                                 <td class="py-2">:</td>
-                                <td class="py-2 pl-4 text-primary" >{{ $pengaduan->date }}</td>
+                                <td class="py-2 pl-4 text-primary" >{{ $pengaduan->event_date }}</td>
                             </tr>
                             <tr class="border-t border-primary">
                                 <td class="pl-6 py-2 text-primary ">Foto</td>

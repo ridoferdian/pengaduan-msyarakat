@@ -14,11 +14,18 @@ class IsPeople
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      * @return \Symfony\Component\HttpFoundation\Response
-     */ 
+     */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('people')->check() && Auth::guard('people')->user()->role != 'user' ) {
-            return redirect()->back()->with(['error' => 'Anda tidak memiliki akses ']);
+        if (!Auth::guard('people')->check()) {
+            return redirect()->back()->with(['error' => 'Login Terlebih Dahulu ']);
+        }
+
+        $user = Auth::guard('people')->user();
+
+        // Memeriksa apakah pengguna memiliki peran 'user'
+        if ($user->role != 'user') {
+            return redirect()->back()->with(['error' => 'Anda tidak memiliki akses.']);
         }
 
         return $next($request);

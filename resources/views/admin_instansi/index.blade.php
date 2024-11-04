@@ -15,6 +15,12 @@
     @vite('resources/css/app.css')
 </head>
 <body>
+
+    @if (session('error'))
+    <div id="alert3" class="fixed top-32  right-0 bg-red-800 text-white px-4 py-6 rounded transition-transform duration-200 ease-out transform font-poppins translate-x-full">
+        {{ session('error') }}
+    </div>
+    @endif
         <section class="h-screen bg-primary " >
             <div class="px-4 flex justify-center relative">
 
@@ -54,6 +60,8 @@
     <script src="script.js" ></script>
     <script>
           feather.replace();
+
+
     </script>
 
 

@@ -20,7 +20,7 @@
             <div class="bg-white p-6 rounded shadow-lg font-poppins">
                 <div class="flex justify-between">
                     <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                    <p class="text-sm" >{{ $pengaduan->date->diffForHumans() }}</p>
+                    <p class="text-sm" >{{ $pengaduan->report_timestamp->diffForHumans() }}</p>
                 </div>
                 <div class="ml-16  absolute top-4 ">
                     <p class="text-2xl ">{{ $pengaduan->name }}</p>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="flex ml-10 mt-5">
                     <i data-feather="calendar" class="mt-1 mr-2 w-[20px] " ></i>
-                    <p class="text-sm font-light mt-2">{{ $pengaduan->date->format('d F') }}</p>
+                    <p class="text-sm font-light mt-2">{{ $pengaduan->report_timestamp->format('d F') }}</p>
                     @if ($pengaduan->status == 'pending')
                     <p class="text-sm font-light mt-2 ml-3" >pending</p>
                     @elseif($pengaduan->status == 'proses')

@@ -35,6 +35,12 @@
                             @error('report')
                             <p class="ml-2 text-sm">{{ $message }}</p>
                             @enderror
+                            <div>
+                                <input type="text" id="dateInput" placeholder="Pilih Tanggal Kejadian" onfocus="(this.type='date')" onblur="this.type='text'"  name="event_date" id="tanggal" class="block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" value="{{ old('event_date') }}" >
+                            </div>
+                            @error('event_date')
+                            <p class="ml-2 text-sm">{{ $message }}</p>
+                            @enderror
                             <div class="mb-3 ">
                                 <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
                                     <option value="">Pilih kategori Laporan Anda</option>
@@ -107,7 +113,7 @@
         </div>
     </div>
 
-    <div class="lg:mt-[30rem] mt-[42rem]  lg:col-span-2 pb-20" >
+    <div class="lg:mt-[35rem] mt-[51rem]  lg:col-span-2 pb-20" >
         <div class="">
             <div class="pb-3 pl-3 border-b-2 text-xl mx-auto">
                 <a class=" {{ $siapa != 'me' ? 'tab-active' : ''}} mr-4 hover:border-b-sky-800 hover:text-sky-800 hover: pb-3 hover:border-b-2" href="{{ route('laporan') }}">
@@ -124,12 +130,12 @@
             <div id="report-container-{{ $v->id_message }}" class="mt-7 relative pb-3 border-b-2 font-poppins">
                 <div class="flex ml-4 justify-between">
                     <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                    <p class="text-sm">{{ $v->date->diffForHumans() }}</p>
+                    <p class="text-sm">{{ $v->report_timestamp->diffForHumans() }}</p>
                 </div>
                 <div class="ml-20 absolute top-0">
                     <p class="text-2xl font-nunito">{{ $v->user->name }}</p>
                     <div class="flex">
-                        <p class="text-xs font-light mt-2">{{ $v->date->format('d F') }}</p>
+                        <p class="text-xs font-light mt-2">{{ $v->report_timestamp->format('d F') }}</p>
                         @if ($v->status == 'pending')
                         <p class="text-xs font-light mt-2 ml-3">Pending</p>
                         @else
@@ -177,13 +183,29 @@
                     </div>
                     <div class="flex mt-5">
                         <button type="button" class="text-sm content-center edit-btn" data-id="{{ $v->id_message }}">Ubah Laporan</button>
-                        <form action="{{ route('laporan.destroy', $v->id_message) }}" method="post" class="ml-3">
+                        <button type="button" class="rounded-md flex text-sm" onclick="openModal({{ $v->id_message }})">
+                            <i data-feather="x-circle" class="flex ml-3 w-4"></i>
+                            <p class="ml-2 content-center">Hapus</p>
+                        </button>
+
+                        <!-- Modal unik untuk setiap laporan -->
+                        <div id="confirmModal{{ $v->id_message }}" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-75 w-full ">
+                            <div class="flex items-center justify-center min-h-screen">
+                                <div class="bg-white px-10 py-5 rounded-lg shadow-lg">
+                                    <p>Yakin ingin menghapus laporan?</p>
+                                    <div class="flex justify-end mt-12">
+                                        <button onclick="closeModal({{ $v->id_message }})" class="bg-gray-300 px-4 py-2 rounded mr-2">Tidak</button>
+                                        <button onclick="document.getElementById('deleteForm{{ $v->id_message }}').submit()" class="bg-red-500 text-white px-4 py-2 rounded">Oke</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Form unik untuk setiap laporan -->
+                        <form id="deleteForm{{ $v->id_message }}" action="{{ route('laporan.destroy', $v->id_message) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="w-full rounded-md flex text-sm">
-                                <i data-feather="x-circle" class="flex ml-3 w-4"></i>
-                                <p class="ml-2 content-center">Hapus</p>
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -194,12 +216,12 @@
             <div  class="mt-7 relative pb-3 border-b-2 font-poppins">
                 <div class="flex ml-4 justify-between">
                     <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                    <p class="text-sm">{{ $v->date->diffForHumans() }}</p>
+                    <p class="text-sm">{{ $v->report_timestamp->diffForHumans() }}</p>
                 </div>
                 <div class="ml-20 absolute top-0">
                     <p class="text-2xl font-nunito">{{ $v->name }}</p>
                     <div class="flex">
-                        <p class="text-xs font-light mt-2">{{ $v->date->format('d F') }}</p>
+                        <p class="text-xs font-light mt-2">{{ $v->report_timestamp->format('d F') }}</p>
                         @if ($v->status == 'pending')
                         <p class="text-xs font-light mt-2 ml-3">Pending</p>
                         @else
@@ -242,7 +264,7 @@
 <script>
      document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', function() {
-            const id = button.getAttribute('data-id'); // Mendapatkan id laporan dari atribut data-id
+            const id = button.getAttribute('data-id');
             const container = document.getElementById('report-container-' + id); // Mendapatkan elemen container berdasarkan id laporan
 
             const reportText = container.querySelector('#report-text-' + id); // Temukan paragraf laporan dalam container
@@ -252,6 +274,14 @@
             form.style.display = 'block'; // Tampilkan form input
         });
     });
+
+    function openModal(id) {
+        document.getElementById('confirmModal' + id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+        document.getElementById('confirmModal' + id).classList.add('hidden');
+    }
 </script>
 
 

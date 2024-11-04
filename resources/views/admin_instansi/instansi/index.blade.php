@@ -1,7 +1,9 @@
 @extends('admin_instansi.layouts.dashboard-layout')
 
 @section('title', 'Instansi')
-
+@section('header')
+        <p class="ml-2">Instansi</p>
+@endsection
 @section('content')
 
     <section>
