@@ -143,7 +143,12 @@
                         @endphp
                         <div class="mt-3 flex j">
                         @foreach ($photos as $photo)
-                            <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" width="150" class="mr-2 mb-2 flex">
+                        @php
+                        $imagePath = storage_path('app/public/' . $photo);
+                        $size = getimagesize($imagePath);
+                        $orientationClass = $size[1] < $size[0] ? 'landscape' : 'portrait';
+                    @endphp
+                <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" class="mr-2 mb-2 flex {{ $orientationClass }} object-cover">
                         @endforeach
                         </div>
                     @endif

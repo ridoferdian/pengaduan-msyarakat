@@ -26,7 +26,7 @@ class IsAdminAgency
     }
 
     // Jika pengguna tidak login atau tidak memiliki akses, arahkan kembali ke halaman awal admin instansi
-    return redirect()->route('admin_instansi.index');
+    return redirect()->route('admin_instansi.index')->with('error', 'anda tidak memiliki akses');
 }
 
 }

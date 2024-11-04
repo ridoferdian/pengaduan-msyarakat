@@ -21,7 +21,7 @@ return new class extends Migration
                 $table->string('title');
                 $table->text('report');
                 $table->string('email')->nullable();
-                $table->string('photo')->nullable();
+                $table->string('photo', 512)->nullable();
                 $table->string('code')->unique();
                 $table->enum('status', ['pending', 'proses', 'done']);
                 $table->timestamp('report_timestamp')->useCurrent();

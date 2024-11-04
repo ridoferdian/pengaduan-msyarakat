@@ -184,7 +184,9 @@ return [
             'min' => 'minimal 8 kata'
         ],
         'nik' => [
-            'required' => 'nik wajib diisi'
+            'required' => 'nik wajib diisi',
+            'min' => 'nik terlalu pendek',
+            'max' => 'nik terlalu panjang'
         ],
         'telp' => [
             'required' => 'nomor hp wajib diisi',

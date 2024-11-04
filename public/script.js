@@ -15,6 +15,8 @@ function showModal() {
 }
 
 
+
+
 document.getElementById("loginButton").addEventListener("click", function () {
     showModal();
 });
@@ -33,14 +35,10 @@ document.getElementById("closeModal").addEventListener("click", function () {
 });
 
 
-document
-    .getElementById("mainForm")
-    .addEventListener("submit", function (event) {
+document.getElementById("mainForm").addEventListener("submit", function (event) {
         event.preventDefault();
         showModal();
     });
-
-
 
 $(document).ready(function () {
     $("#checkbox1").change(function () {
@@ -67,3 +65,4 @@ $(document).ready(function () {
 new DataTable("#table");
 
 feather.replace();
+

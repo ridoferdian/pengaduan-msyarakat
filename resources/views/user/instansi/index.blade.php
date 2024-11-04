@@ -31,7 +31,7 @@
                     <tbody id="resultsTableBody">
                         @foreach ($instansis as $instansi)
                         <tr class="odd:bg-slate-100 even:bg-white">
-                            <td class="px-4 py-2 border-t-2 border-gray-300 w-72    " >{{ $instansi->parent }}</td>
+                            <td class="px-4 py-2 border-t-2 border-gray-300 w-72" >{{ $instansi->parent }}</td>
                             <td class="px-4 py-2 border-t-2 border-gray-300" >
                                 <a href="{{ route('instansi.show', $instansi->slug) }}" class="text-blue-600 hover:underline">
                                     {{ $instansi->name }}
@@ -52,6 +52,6 @@
     <div class="flex justify-center mb-20">
         {{ $instansis->links() }}
     </div>
-   
+
 
 @endsection

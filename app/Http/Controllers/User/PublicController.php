@@ -142,7 +142,7 @@ class PublicController extends Controller
 
     public function laporan($siapa = '')
     {
-        $terverifikasi = Message::where([['user_id', Auth::guard('people')->user()->id], ['status', '!=', '0']])->get()->count();
+        $terverifikasi = Message::where([['user_id', Auth::guard('people')->user()->id], ['status', '!=', 'pending']])->get()->count();
         $proses = Message::where([['user_id', Auth::guard('people')->user()->id], ['status', 'proses']])->get()->count();
         $selesai = Message::where([['user_id', Auth::guard('people')->user()->id], ['status', 'done']])->get()->count();
 
@@ -173,8 +173,23 @@ class PublicController extends Controller
 
         $message = Message::find($id_message);
 
+        $validate = $request->validate([
+            'report' => 'required|min:10',
+            'photos.*' => 'nullable|image|max:2048' // Maksimal 2MB
+        ]);
+
+        $photoPaths = [];
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $photoPaths[] = $photo->store('message', 'public');
+            }
+        }
+
+
         $message->update([
             'report' => $request->report,
+            'photo' => !empty($photoPaths) ? json_encode($photoPaths) : null
         ]);
 
         return redirect()->back();

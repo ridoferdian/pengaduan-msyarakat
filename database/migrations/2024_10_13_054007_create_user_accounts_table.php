@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->char('nik',16);
             $table->string('username');
-            $table->string('email')->unique;
+            $table->string('email')->unique();
             $table->unsignedBigInteger('agency_id')->nullable();
             $table->string('password');
             $table->string('telp');

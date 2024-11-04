@@ -31,6 +31,18 @@
             border-radius: 0.375rem;
             margin-right: 0.5rem;
         }
+        .landscape {
+            height: 150px;
+            width: auto;
+        }
+        .portrait {
+            height: 300px;
+            width: 200px;
+        }
+        .preview-container img {
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -152,7 +164,7 @@ integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRk
 <script>
       feather.replace();
 
-let table = new DataTable('#in');
+        let table = new DataTable('#in');
 
 
       const BCariButtons = document.querySelectorAll(".BCari");

@@ -22,8 +22,6 @@ class IsPeople
         }
 
         $user = Auth::guard('people')->user();
-
-        // Memeriksa apakah pengguna memiliki peran 'user'
         if ($user->role != 'user') {
             return redirect()->back()->with(['error' => 'Anda tidak memiliki akses.']);
         }

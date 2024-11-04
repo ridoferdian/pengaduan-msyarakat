@@ -2,6 +2,7 @@
 
 @section('title', 'PEKAT')
 
+
 @section('content')
 
 <section class="header bg-primary" >
@@ -58,7 +59,7 @@
                                 </select>
                             </div>
                             <div class="border border-gray-300 py-1 px-1 rounded-md">
-                                <input type="file" name="photos[]" multiple >
+                                <input type="file" name="photos[]" multiple class="w-full">
                             </div>
                             @error('photos.*')
                             <p class="ml-2 text-sm">{{ $message }}</p>
@@ -148,31 +149,38 @@
                 <div class="mt-12 ml-10">
                     <h3 class="text-lg ml-4 mb-2">{{ $v->title }}</h3>
 
-                    <!-- Paragraf laporan -->
                     <p id="report-text-{{ $v->id_message }}" class="text-sm font-montserrat">{{ $v->report }}</p>
 
-                    <!-- Form tersembunyi untuk mengubah laporan -->
-                    <form id="form-{{ $v->id_message }}" action="{{ route('laporan.update', $v->id_message) }}" method="post" class="mt-3" style="display: none;">
+                    <form id="form-{{ $v->id_message }}" action="{{ route('laporan.update', $v->id_message) }}" method="post" class="mt-3" style="display: none;" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mt-2">
                             <textarea name="report" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" rows="4">{{ $v->report }}</textarea>
                         </div>
+                        <div class="">
+                            <input type="file" id="file" name="photos[]" multiple
+                            class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition duration-150 ease-in-out">
+                        </div>
                         <div class="mt-2">
                             <button type="submit" class="bg-primary text-white p-2 rounded">Simpan Laporan</button>
-
+                            <button type="button" class="bg-gray-500 text-white p-2 rounded cancel-btn" data-id="{{ $v->id_message }}">Batal</button>
                         </div>
                     </form>
                     @if ($v->photo)
+                    @php
+                        $photos = json_decode($v->photo);
+                    @endphp
+                    <div class="mt-3 flex">
+                    @foreach ($photos as $photo)
                         @php
-                            $photos = json_decode($v->photo);
+                            $imagePath = storage_path('app/public/' . $photo);
+                            $size = getimagesize($imagePath);
+                            $orientationClass = $size[1] < $size[0] ? 'landscape' : 'portrait';
                         @endphp
-                        <div class="mt-3 flex j">
-                        @foreach ($photos as $photo)
-                            <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" width="150" class="mr-2 mb-2 flex">
-                        @endforeach
-                        </div>
-                    @endif
+                    <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" class="mr-2 mb-2 flex {{ $orientationClass }} object-cover">
+                    @endforeach
+                    </div>
+                @endif
                     <div class="mt-4 text-primary">
                         <div class="mt- py-3">
                             @if ($v->response)
@@ -182,13 +190,17 @@
                         </div>
                     </div>
                     <div class="flex mt-5">
-                        <button type="button" class="text-sm content-center edit-btn" data-id="{{ $v->id_message }}">Ubah Laporan</button>
+                        <a href="javascript:void(0)" id="tindak" class="text-sm content-center flex" >
+                        <i class="flex ml-3 w-4 " data-feather="repeat"></i>
+                        <p class="ml-1 content-center">Tindak Lanjut</p>
+                        </a>
+                        <button type="button" class="text-sm content-center edit-btn ml-3" data-id="{{ $v->id_message }}">Ubah Laporan</button>
                         <button type="button" class="rounded-md flex text-sm" onclick="openModal({{ $v->id_message }})">
                             <i data-feather="x-circle" class="flex ml-3 w-4"></i>
                             <p class="ml-2 content-center">Hapus</p>
                         </button>
 
-                        <!-- Modal unik untuk setiap laporan -->
+
                         <div id="confirmModal{{ $v->id_message }}" class="hidden fixed z-10 inset-0 bg-gray-800 bg-opacity-75 w-full ">
                             <div class="flex items-center justify-center min-h-screen">
                                 <div class="bg-white px-10 py-5 rounded-lg shadow-lg">
@@ -202,15 +214,17 @@
                         </div>
 
 
-                        <!-- Form unik untuk setiap laporan -->
                         <form id="deleteForm{{ $v->id_message }}" action="{{ route('laporan.destroy', $v->id_message) }}" method="post">
                             @csrf
                             @method('DELETE')
                         </form>
                     </div>
                 </div>
+                <div class="">
+                    
+                </div>
             </div>
-        @endforeach
+            @endforeach
             @else
             @foreach ($message as $k => $v)
             <div  class="mt-7 relative pb-3 border-b-2 font-poppins">
@@ -244,7 +258,12 @@
                         @endphp
                         <div class="mt-3 flex j">
                         @foreach ($photos as $photo)
-                            <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" width="150" class="mr-2 mb-2 flex">
+                        @php
+                            $imagePath = storage_path('app/public/' . $photo);
+                            $size = getimagesize($imagePath);
+                            $orientationClass = $size[1] < $size[0] ? 'landscape' : 'portrait';
+                        @endphp
+                        <img src="{{ asset('storage/' . $photo) }}" alt="User Photo" class="mr-2 mb-2 flex {{ $orientationClass }} object-cover">
                         @endforeach
                         </div>
                     @endif
@@ -262,18 +281,30 @@
 
 
 <script>
-     document.querySelectorAll('.edit-btn').forEach(button => {
+
+    document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', function() {
             const id = button.getAttribute('data-id');
-            const container = document.getElementById('report-container-' + id); // Mendapatkan elemen container berdasarkan id laporan
+            const container = document.getElementById('report-container-' + id);
+            const reportText = container.querySelector('#report-text-' + id);
+            const form = container.querySelector('#form-' + id);
 
-            const reportText = container.querySelector('#report-text-' + id); // Temukan paragraf laporan dalam container
-            const form = container.querySelector('#form-' + id); // Temukan form dalam container
-
-            reportText.style.display = 'none'; // Sembunyikan paragraf laporan
-            form.style.display = 'block'; // Tampilkan form input
+            reportText.style.display = 'none';
+            form.style.display = 'block';
         });
     });
+
+    document.querySelectorAll('.cancel-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = button.getAttribute('data-id');
+            const container = document.getElementById('report-container-' + id);
+            const reportText = container.querySelector('#report-text-' + id);
+            const form = container.querySelector('#form-' + id);
+            form.style.display = 'none';
+            reportText.style.display = 'block';
+        });
+    });
+
 
     function openModal(id) {
         document.getElementById('confirmModal' + id).classList.remove('hidden');
