@@ -120,12 +120,18 @@
             <div  class="mt-7 relative pb-3 border-b-2 font-poppins">
                 <div class="flex ml-4 justify-between">
                     <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                    <p class="text-sm">{{ $v->report_timestamp->diffForHumans() }}</p>
+                    <p class="text-sm">
+                        {{ $v->report_timestamp ? $v->report_timestamp->diffForHumans() : 'Waktu tidak tersedia' }}
+                    </p>
+
                 </div>
                 <div class="ml-20 absolute top-0">
                     <p class="text-2xl font-nunito">{{ $v->name }}</p>
                     <div class="flex">
-                        <p class="text-xs font-light mt-2">{{ $v->report_timestamp->timezone('Asia/Jakarta')->format('d F') }}</p>
+                        <p class="text-xs font-light mt-2">
+                            {{ $v->report_timestamp ? $v->report_timestamp->timezone('Asia/Jakarta')->format('d F') : 'Waktu tidak tersedia' }}
+                        </p>
+
                         @if ($v->status == 'pending')
                      <p class="text-xs font-light mt-2 ml-3">Pending</p>
                         @else

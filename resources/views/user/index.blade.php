@@ -116,6 +116,10 @@
                 @error('event_date')
                             <p class="ml-2 text-sm">{{ $message }}</p>
                 @enderror
+<<<<<<< HEAD
+
+=======
+>>>>>>> 230abf97b1beb95d768f4580ae0fdd49bfaf69d3
 
                 <div class="mb-3 ">
                     <select name="category_id" id="category" class="mt-1 block w-full py-3 px-3 text-sm border border-gray-300 rounded-md shadow-sm" required>
@@ -235,12 +239,17 @@
             <div class="border-b border-primary py-8 relative ">
             <div class="flex ml-4 justify-between">
                 <img src="{{ asset('images/user_default.png') }}" alt="profil" width="40" class="rounded-full">
-                <p class="text-sm">{{ $message->report_timestamp->diffForHumans() }}</p>
+                <p class="text-xs text-gray-500">
+                    {{ $message->report_timestamp ? $message->report_timestamp->diffForHumans() : 'Waktu tidak tersedia' }}
+                </p>
             </div>
             <div class="ml-20 absolute top-5">
                 <p class="text-2xl font-nunito">{{ $message->name === 'anonymous' ? 'Anonymous' : $message->name }}</p>
                 <div class="flex">
-                    <p class="text-xs font-light mt-2">{{ $message->report_timestamp->format('d F') }}</p>
+                    <p class="text-xs font-light mt-2">
+                        {{ $message->report_timestamp ? $message->report_timestamp->format('d F') : 'Tanggal tidak tersedia' }}
+                    </p>
+
                     @if ($message->status == '0')
                     <p class="text-xs font-light mt-2 ml-3">Pending</p>
                     @else
@@ -282,6 +291,39 @@
 
 {{-- end laporan --}}
 
+<<<<<<< HEAD
+<div id="loginModal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-gray-800 bg-opacity-75 w-full box-border">
+    <div class="bg-white p-8 rounded-md shadow-2xl relative max-w-md w-full">
+        @if (Session::has('pesan'))
+            <div class="mt-2">
+                {{ Session::get('pesan') }}
+            </div>
+        @endif
+        <h2 class="text-xl font-bold mb-4 font-nunito">Login</h2>
+        <form action="{{ route('login') }}" method="post" class="font-poppins">
+            @csrf
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" name="username" id="username" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required autocomplete="off" value="{{ old('username') }}">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="password" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <button type="submit" class="bg-blue-500 flex text-white py-2 px-4 rounded-md">Login</button>
+        </form>
+        <button id="closeModal" class="mt-4 bg-red-500 text-white px-4 py-2 rounded absolute left-32 bottom-8">Close</button>
+
+        @if (Session::has('error'))
+        <div class="relative">
+            <a href="{{ route('forgot_password') }}" class="text-sm text-blue-500 hover:underline absolute right-0 -top-10">Lupa password?</a>
+        </div>
+        @endif
+
+    </div>
+</div>
+=======
+>>>>>>> 230abf97b1beb95d768f4580ae0fdd49bfaf69d3
 
 
 @endsection
